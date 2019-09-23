@@ -1,3 +1,10 @@
+client/
+__tests__/
+companies/
+overview.md
+
+PORT=4000
+
 # Logs
 logs
 *.log
