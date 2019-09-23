@@ -4,7 +4,7 @@
 
 ### Login
 
-> **POST** https:/api/auth/login<br/>
+> **POST** https://business-rec-web-be.herokuapp.com/api/auth/login<br/>
 
 Must include username and password in request body. Returns a json web token<br/><br/>
 Example request body:<br/>
@@ -20,7 +20,7 @@ Example request body:<br/>
 
 ### Register
 
-> **POST** https:api/auth/register
+> **POST** https://business-rec-web-be.herokuapp.com/api/auth/register
 
 Must include unique username, unique email address and a password in request body<br/><br/>
 Example request body: <br/>
@@ -28,7 +28,6 @@ Example request body: <br/>
 ```
 {
 "username": "testUser",
-"email": "test@email.com",
 "password": "testPassword"
 }
 ```
