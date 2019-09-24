@@ -1,29 +1,52 @@
 # Business Recommendation By Review API Documentation
 
-## AUTH ENDPOINTS
+## Introduction
+Stores user information and authentication
 
-### Login
+## Overview
+Users create their own business, or mutliple businesses. TBD, their business will be modeled on similar business reviews
 
-> **POST** https://business-rec-web-be.herokuapp.com/api/auth/login<br/>
+## Authentication
+JWT
 
-Must include username and password in request body. Returns a json web token<br/><br/>
-Example request body:<br/>
+## Error Codes
+401 Unauthorized 404 Not Found 422 Unprocessable Entity
 
-```
-{
-"username": "testUser",
-"password": "testPassword"
-}
-```
+## auth
+user login and register
 
 ---
 
-### Register
+## USER AUTH 
+---
 
-> **POST** https://business-rec-web-be.herokuapp.com/api/auth/register
+## POST login
+
+```
+https://business-rec-web-be.herokuapp.com/api/auth/login
+```
+
+### Bodyraw (application/json). Returns a json web token
+```
+{
+	"username": "bryant",
+	"password": "password"
+}
+
+
+```
+---
+
+### POST Register
+
+```
+https://business-rec-web-be.herokuapp.com/api/auth/register
+```
 
 Must include unique username, and a password in request body<br/><br/>
 Example request body: <br/>
+
+### Bodyraw (application/json).
 
 ```
 {
@@ -34,19 +57,96 @@ Example request body: <br/>
 
 ---
 ## USER ENDPOINTS
-
-### User by id
-
-> **GET** https://business-rec-web-be.herokuapp.com/api/users/:id
+---
 
 
-### Get User's Company/Companies
-> **GET** https://business-rec-web-be.herokuapp.com/api/users/:id/companies
+## GET get a user
 
-### Add a Company for a User
-> **POST** https://business-rec-web-be.herokuapp.com/api/users/:id/newcompany
+```
+https://business-rec-web-be.herokuapp.com/api/users/:id
+```
+Path Variables
 
-Example request body: <br/>
+```
+id
+```
+---
+## DELETE delete a user
+
+```
+https://business-rec-web-be.herokuapp.com/api/users/:id
+```
+Path Variables
+
+```
+id
+```
+
+---
+## PATCH patch a user
+```
+https://business-rec-web-be.herokuapp.com/api/users/:id
+```
+Path Variables
+
+```
+id
+```
+### Bodyraw (application/json).
+```
+{
+  "username": "pizzahut',
+  "password": "meatlovers"
+}
+```
+
+```
+{
+  "password": "meatlovers"
+}
+```
+---
+
+## GET get a users companies
+
+```
+https://business-rec-web-be.herokuapp.com/api/users/:id/companies
+```
+### Bodyraw (application/json).
+
+```
+[
+  {
+    "id": 1,
+    "name": "Mosciski, Schuppe and Casper",
+    "type": "Delis",
+    "streetName": "Abraham Ridges",
+    "streetAddress": "99906 Runolfsdottir Causeway",
+    "city": "West Deangelofort",
+    "state": "Minnesota",
+    "zipCode": "67642"
+  },
+  {
+    "id": 2,
+    "name": "Yundt, McLaughlin and Yundt",
+    "type": "Sandwiches",
+    "streetName": "Maureen Fork",
+    "streetAddress": "7466 Roosevelt Ranch",
+    "city": "Hardymouth",
+    "state": "New York",
+    "zipCode": "21912"
+  }
+]
+```
+
+---
+## POST a new Company for a User
+```
+https://business-rec-web-be.herokuapp.com/api/users/:id/newcompany
+```
+
+### Bodyraw (application/json).
+
 ```
   {
     "name": "Strosin - Wehner",
@@ -58,12 +158,40 @@ Example request body: <br/>
     "zipCode": "05445"
   },
 ```
-
 ---
-## COMPANY ENDPOINTS
-### Company by id
+## PATCH patch a users company
 
-> **GET** https://business-rec-web-be.herokuapp.com/api/companies/:id
-
-
+```
+https://business-rec-web-be.herokuapp.com/api/users/:id/companies
+```
+### Bodyraw (application/json).
+```
+  {
+    "id": 11,
+    "name": "updated name",
+    "type": "test",
+    "streetName": "abc",
+    "streetAddress": "1234",
+    "city": "NYC",
+    "state": "NY",
+    "zipCode": "05445"
+  }
+  ```
 ---
+## DELETE delete a user's company
+```
+https://business-rec-web-be.herokuapp.com/api/users/:id/companies
+```
+### Path Variables
+```
+id
+```
+
+### Bodyraw (application/json).
+```
+  {
+    "id": "9"
+  }
+  ```
+---
+
