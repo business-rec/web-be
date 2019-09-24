@@ -55,4 +55,8 @@ app.use((err, req, res, next) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.json({ message: "API is up and running!" });
+});
+
 module.exports = app;

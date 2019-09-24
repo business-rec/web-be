@@ -48,14 +48,14 @@ module.exports = router => {
 	});
 	//add a new company to a user, in the req body
 	router.post("/:id/newcompany", async (req, res) => {
-		const newcompany = req.body.company;
+		const newcompany = req.body;
 		const user = await User.query().findById(req.params.id);
 		if (!user) {
 			throw createStatusCodeError(404);
 		}
 		const company = await user
 			.$relatedQuery("companies")
-			.insert({ company: newcompany });
+			.insert(newcompany);
 
 		res.send(company);
 	});
