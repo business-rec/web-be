@@ -35,13 +35,35 @@ Example request body: <br/>
 ---
 ## USER ENDPOINTS
 
-### User
+### User by id
 
 > **GET** https://business-rec-web-be.herokuapp.com/api/users/:id
 
-Must include unique JWT in request header <br/><br/>
+
+### Get User's Company/Companies
+> **GET** https://business-rec-web-be.herokuapp.com/api/users/:id/companies
+
+### Add a Company for a User
+> **POST** https://business-rec-web-be.herokuapp.com/api/users/:id/newcompany
+
 Example request body: <br/>
+```
+  {
+    "name": "Strosin - Wehner",
+    "type": "American (Traditional)",
+    "streetName": "Emilia Passage",
+    "streetAddress": "52617 Hailee Rapid",
+    "city": "Kiehnview",
+    "state": "Mississippi",
+    "zipCode": "05445"
+  },
+```
 
 ---
 ## COMPANY ENDPOINTS
+### Company by id
+
+> **GET** https://business-rec-web-be.herokuapp.com/api/companies/:id
+
+
 ---
