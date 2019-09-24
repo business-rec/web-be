@@ -10,7 +10,13 @@ exports.up = function(knex) {
 		})
 		.createTable("companies", companies => {
 			companies.increments("id").primary();
-			companies.string("company", 255).notNullable();
+			companies.string("name", 255).notNullable();
+			companies.string("type", 255).notNullable();
+			companies.string("streetName", 255).notNullable();
+			companies.string("streetAddress", 255).notNullable();
+			companies.string("city", 255).notNullable();
+			companies.string("state", 255).notNullable();
+			companies.string("zipCode", 255).notNullable();
 		})
 		.createTable("users_companies", table => {
 			table.increments("id").primary();
