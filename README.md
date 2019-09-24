@@ -33,7 +33,7 @@ Example request body: <br/>
 ```
 
 ---
-
+## USER ENDPOINTS
 ---
-
+## COMPANY ENDPOINTS
 ---
