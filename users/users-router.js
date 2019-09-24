@@ -26,6 +26,18 @@ module.exports = router => {
 		res.send(user);
 	});
 
+	router.get("/graph/:id", async (req, res) => {
+		const user = await User.query()
+			.skipUndefined()
+			.allowEager("[companies]")
+			.eager(req.query.eager)
+			.findById(req.params.id);
+		if (!user) {
+			throw createStatusCodeError(404);
+		}
+		res.send(user);
+	});
+
 	router.patch("/:id", async (req, res) => {
 		let update = req.body;
 		let user;
