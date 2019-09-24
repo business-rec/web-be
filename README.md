@@ -71,6 +71,63 @@ Path Variables
 id
 ```
 ---
+
+
+## GET get a user graph
+
+```
+http://localhost:3300/api/users/graph/:id/?eager=companies
+```
+Path Variables
+
+```
+id
+```
+
+### Bodyraw (application/json).
+
+```
+{
+  "id": 10,
+  "username": "Rudolph17",
+  "password": "$2b$10$mMer7ZOCJv9YG4lBMzvtteAoLbY2oIYWw5/vupITc05ndoeL.7Hgu",
+  "companies": [
+    {
+      "id": 11,
+      "name": "updated name",
+      "type": "test",
+      "streetName": "abc",
+      "streetAddress": "1234",
+      "city": "NYC",
+      "state": "NY",
+      "zipCode": "05445"
+    },
+    {
+      "id": 1,
+      "name": "Mosciski, Schuppe and Casper",
+      "type": "Delis",
+      "streetName": "Abraham Ridges",
+      "streetAddress": "99906 Runolfsdottir Causeway",
+      "city": "West Deangelofort",
+      "state": "Minnesota",
+      "zipCode": "67642"
+    },
+    {
+      "id": 2,
+      "name": "Yundt, McLaughlin and Yundt",
+      "type": "Sandwiches",
+      "streetName": "Maureen Fork",
+      "streetAddress": "7466 Roosevelt Ranch",
+      "city": "Hardymouth",
+      "state": "New York",
+      "zipCode": "21912"
+    }
+  ]
+}
+```
+
+---
+
 ## DELETE delete a user
 
 ```
