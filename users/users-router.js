@@ -26,8 +26,25 @@ module.exports = router => {
 		res.send(user);
 	});
 
-	//get a user's companies
-	//http://localhost:3300/api/users/1/companies
+	router.patch("/:id", async (req, res) => {
+		let update = req.body;
+		let user;
+		if (update.password) {
+			const hash = await bcrypt.hash(update.password, 10);
+			update = { ...update, password: hash };
+			user = await User.query().patchAndFetchById(req.params.id, update);
+		}
+		user = await User.query().patchAndFetchById(req.params.id, update);
+
+		res.send(user);
+	});
+
+	router.delete("/:id", async (req, res) => {
+		await User.query().deleteById(req.params.id);
+
+		res.send({});
+	});
+
 	router.get("/:id/companies", async (req, res) => {
 		const user = await User.query().findById(req.params.id);
 		if (!user) {
@@ -46,6 +63,7 @@ module.exports = router => {
 		await user.$relatedQuery("companies").relate(req.body.id);
 		res.send(req.body);
 	});
+
 	//add a new company to a user, in the req body
 	router.post("/:id/newcompany", async (req, res) => {
 		const newcompany = req.body;
@@ -58,6 +76,36 @@ module.exports = router => {
 			.insert(newcompany);
 
 		res.send(company);
+	});
+
+	router.delete("/:id/companies", async (req, res) => {
+		const user = await User.query().findById(req.params.id);
+		if (!user) {
+			throw createStatusCodeError(404);
+		}
+		const company = await user
+			.$relatedQuery("companies")
+			.unrelate()
+			.findById(req.body.id);
+		if (!company) {
+			res.send({ message: "company does not exist for user" });
+		}
+		res.send(req.body);
+	});
+
+	router.patch("/:id/companies", async (req, res) => {
+		const user = await User.query().findById(req.params.id);
+		if (!user) {
+			throw createStatusCodeError(404);
+		}
+		const company = await user
+			.$relatedQuery("companies")
+			.patchAndFetchById(req.body.id, req.body);
+		//.findById(req.body.id);
+		if (!company) {
+			res.send({ message: "company does not exist for user" });
+		}
+		res.send(req.body);
 	});
 };
 
