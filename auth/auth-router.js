@@ -13,7 +13,7 @@ module.exports = router => {
 		let insertedUser;
 		const user = await User.query().findOne({ username: graph.username });
 		if (user) {
-			res.status(404).send({ loginError: "username exists" });
+			res.status(422).send({ loginError: "username exists" });
 		}
 		try {
 			insertedUser = await transaction(User.knex(), trx => {
@@ -47,10 +47,10 @@ module.exports = router => {
 						token
 					});
 				} else {
-					res.status(401).json({ message: "Invalid password" });
+					res.status(422).json({ message: "Invalid password" });
 				}
 			} else {
-				res.status(401).send({ message: "invalid username" });
+				res.status(404).send({ message: "invalid username" });
 			}
 		} catch (err) {
 			console.log(err instanceof objection.ValidationError);
