@@ -37,8 +37,8 @@ app.use(morgan("dev"));
 app.set("json spaces", 2);
 app.use(helmet());
 app.use("/api/auth", router);
-//app.use("/api/companies", authenticate, companiesRouter);
-app.use("/api/companies", companiesRouter);
+app.use("/api/companies", authenticate, companiesRouter);
+//app.use("/api/companies", companiesRouter);
 app.use("/api/users", usersRouter);
 
 AuthRouter(router);
