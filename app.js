@@ -15,7 +15,7 @@ const UsersRouter = require("./users/users-router.js");
 const authenticate = require("./auth/authenticate-middleware.js");
 const { Model } = require("objection");
 
-//const knex = Knex(knexConfig.development);
+//const knex = Knex(knexConfig.staging);
 const knex = require("./database/dbConfig.js");
 
 Model.knex(knex); //objection

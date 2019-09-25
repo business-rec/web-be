@@ -21,12 +21,12 @@ module.exports = {
   },
   staging: {
     client: "pg",
-    connection: "postgres://postgres:@localhost:32768/development_db",
+    connection: "postgres://localhost/test_db",
     migrations: {
-      directory: __dirname + "/db/migrations"
+      directory: __dirname + "/database/migrations"
     },
     seeds: {
-      directory: __dirname + "/db/seeds/development"
+      directory: __dirname + "/database/seeds"
     }
   },
 

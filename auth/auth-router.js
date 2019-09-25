@@ -42,8 +42,11 @@ module.exports = router => {
 				);
 				if (passwordCheck) {
 					const token = await generateToken(user);
+					// console.log(user);
+
 					res.status(201).json({
 						message: `Welcome ${user.username}!`,
+						user: { username: user.username, id: user.id },
 						token
 					});
 				} else {
