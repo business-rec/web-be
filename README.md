@@ -93,8 +93,12 @@ Status: login | Code: 201
 
 ```js
 {
-    "message": "Welcome bryant!",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoxMSwidXNlcm5hbWUiOiJicnlhbnQiLCJpYXQiOjE1NjkzNzI0NTIsImV4cCI6MTU2OTQwMTI1Mn0.6aZ6tkYn2OXpAqcET_3yPBkZQUKELiLyHYyAKk6W9Bs"
+  "message": "Welcome bryant!",
+  "user": {
+    "username": "bryant",
+    "id": 11
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoxMSwidXNlcm5hbWUiOiJicnlhbnQiLCJpYXQiOjE1Njk0MzIwNzIsImV4cCI6MTU2OTUxODQ3Mn0.GFBFJ3mThgUzx8uPK2M206DRSg_pp2Sobf06NFVpihY"
 }
 ```
 
