@@ -1,228 +1,235 @@
 # Business Recommendation By Review API Documentation
 
-## Introduction
+# Introduction
 Stores user information and authentication
 
-## Overview
+# Overview
 Users create their own business, or mutliple businesses. TBD, their business will be modeled on similar business reviews
 
-## Authentication
-JWT
+# Authentication
+json web tokens
 
-## Error Codes
-401 Unauthorized 404 Not Found 422 Unprocessable Entity
+# Error Codes
+401 Unauthorized <br/>
+404 Not Found<br/>
+422 Unprocessable Entity<br/>
+
+## Indices
+
+* [auth](#auth)
+
+  * [login](#1-login)
+  * [register](#2-register)
+
+* [companies](#companies)
+
+  * [get all companies](#1-get-all-companies)
+  * [get company by id](#2-get-company-by-id)
+
+* [user](#user)
+
+  * [get a users companies](#1-get-a-users-companies)
+  * [patch a users company](#2-patch-a-users-company)
+  * [get a user](#3-get-a-user)
+  * [get a user graph](#4-get-a-user-graph)
+  * [delete a user](#5-delete-a-user)
+  * [patch a user](#6-patch-a-user)
+  * [delete a user's company](#7-delete-a-user's-company)
+  * [add existing company to user](#8-add-existing-company-to-user)
+
+* [Default](#default)
+
+  * [get root](#1-get-root)
+
+
+--------
+
 
 ## auth
 user login and register
 
----
 
-## USER AUTH 
----
 
-## POST login
+### 1. login
 
+
+login with username/password
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: https://business-rec-web-be.herokuapp.com/api/auth/login
 ```
-https://business-rec-web-be.herokuapp.com/api/auth/login
-```
 
-### Bodyraw (application/json). Returns a json web token
-```
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json |  |
+
+
+
+***Body:***
+
+```js        
 {
 	"username": "bryant",
 	"password": "password"
 }
-
-
-```
----
-
-### POST Register
-
-```
-https://business-rec-web-be.herokuapp.com/api/auth/register
 ```
 
-Must include unique username, and a password in request body<br/><br/>
-Example request body: <br/>
 
-### Bodyraw (application/json).
 
-```
+***Responses:***
+
+
+Status: login | Code: 201
+
+
+
+```js
 {
-"username": "testUser",
-"password": "testPassword"
+    "message": "Welcome bryant!",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoxMSwidXNlcm5hbWUiOiJicnlhbnQiLCJpYXQiOjE1NjkzNzI0NTIsImV4cCI6MTU2OTQwMTI1Mn0.6aZ6tkYn2OXpAqcET_3yPBkZQUKELiLyHYyAKk6W9Bs"
 }
 ```
 
----
-## USER ENDPOINTS
----
 
 
-## GET get a user
-
-```
-https://business-rec-web-be.herokuapp.com/api/users/:id
-```
-Path Variables
-
-```
-id
-```
----
+### 2. register
 
 
-## GET get a user graph
+login with username/password
 
-```
-http://localhost:3300/api/users/graph/:id/?eager=companies
-```
-Path Variables
 
-```
-id
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: https://business-rec-web-be.herokuapp.com/api/auth/register
 ```
 
-### Bodyraw (application/json).
 
-```
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json |  |
+
+
+
+***Body:***
+
+```js        
 {
-  "id": 10,
-  "username": "Rudolph17",
-  "password": "$2b$10$mMer7ZOCJv9YG4lBMzvtteAoLbY2oIYWw5/vupITc05ndoeL.7Hgu",
-  "companies": [
-    {
-      "id": 11,
-      "name": "updated name",
-      "type": "test",
-      "streetName": "abc",
-      "streetAddress": "1234",
-      "city": "NYC",
-      "state": "NY",
-      "zipCode": "05445"
-    },
-    {
-      "id": 1,
-      "name": "Mosciski, Schuppe and Casper",
-      "type": "Delis",
-      "streetName": "Abraham Ridges",
-      "streetAddress": "99906 Runolfsdottir Causeway",
-      "city": "West Deangelofort",
-      "state": "Minnesota",
-      "zipCode": "67642"
-    },
-    {
-      "id": 2,
-      "name": "Yundt, McLaughlin and Yundt",
-      "type": "Sandwiches",
-      "streetName": "Maureen Fork",
-      "streetAddress": "7466 Roosevelt Ranch",
-      "city": "Hardymouth",
-      "state": "New York",
-      "zipCode": "21912"
-    }
-  ]
+	"username": "bryant267",
+	"password": "password"
 }
 ```
 
----
 
-## DELETE delete a user
 
-```
-https://business-rec-web-be.herokuapp.com/api/users/:id
-```
-Path Variables
+## companies
 
-```
-id
-```
 
----
-## PATCH patch a user
-```
-https://business-rec-web-be.herokuapp.com/api/users/:id
-```
-Path Variables
 
-```
-id
-```
-### Bodyraw (application/json).
-```
-{
-  "username": "pizzahut',
-  "password": "meatlovers"
-}
+### 1. get all companies
+
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: https://business-rec-web-be.herokuapp.com/api/companies/all
 ```
 
-```
-{
-  "password": "meatlovers"
-}
-```
----
 
-## GET get a users companies
+***Headers:***
 
-```
-https://business-rec-web-be.herokuapp.com/api/users/:id/companies
-```
-### Bodyraw (application/json).
+| Key | Value | Description |
+| --- | ------|-------------|
+| Authorization | {{jwt_token}} |  |
 
-```
-[
-  {
-    "id": 1,
-    "name": "Mosciski, Schuppe and Casper",
-    "type": "Delis",
-    "streetName": "Abraham Ridges",
-    "streetAddress": "99906 Runolfsdottir Causeway",
-    "city": "West Deangelofort",
-    "state": "Minnesota",
-    "zipCode": "67642"
-  },
-  {
-    "id": 2,
-    "name": "Yundt, McLaughlin and Yundt",
-    "type": "Sandwiches",
-    "streetName": "Maureen Fork",
-    "streetAddress": "7466 Roosevelt Ranch",
-    "city": "Hardymouth",
-    "state": "New York",
-    "zipCode": "21912"
-  }
-]
+
+
+### 2. get company by id
+
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: https://business-rec-web-be.herokuapp.com/api/companies/:id
 ```
 
----
-## POST a new Company for a User
-```
-https://business-rec-web-be.herokuapp.com/api/users/:id/newcompany
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Authorization | {{jwt_token}} |  |
+
+
+
+## user
+
+
+
+### 1. get a users companies
+
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: https://business-rec-web-be.herokuapp.com/api/users/:id/companies
 ```
 
-### Bodyraw (application/json).
 
-```
-  {
-    "name": "Strosin - Wehner",
-    "type": "American (Traditional)",
-    "streetName": "Emilia Passage",
-    "streetAddress": "52617 Hailee Rapid",
-    "city": "Kiehnview",
-    "state": "Mississippi",
-    "zipCode": "05445"
-  },
-```
----
-## PATCH patch a users company
+***Headers:***
 
+| Key | Value | Description |
+| --- | ------|-------------|
+| Authorization | {{jwt_token}} | jwt token |
+
+
+
+### 2. patch a users company
+
+
+
+***Endpoint:***
+
+```bash
+Method: PATCH
+Type: RAW
+URL: https://business-rec-web-be.herokuapp.com/api/users/:id/companies
 ```
-https://business-rec-web-be.herokuapp.com/api/users/:id/companies
-```
-### Bodyraw (application/json).
-```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json |  |
+| Authorization | {{jwt_token}} |  |
+
+
+
+***Body:***
+
+```js        
   {
     "id": 11,
     "name": "updated name",
@@ -233,22 +240,196 @@ https://business-rec-web-be.herokuapp.com/api/users/:id/companies
     "state": "NY",
     "zipCode": "05445"
   }
-  ```
----
-## DELETE delete a user's company
-```
-https://business-rec-web-be.herokuapp.com/api/users/:id/companies
-```
-### Path Variables
-```
-id
 ```
 
-### Bodyraw (application/json).
+
+
+### 3. get a user
+
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: https://business-rec-web-be.herokuapp.com/api/users/:id/
 ```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Authorization | {{jwt_token}} |  |
+
+
+
+### 4. get a user graph
+
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: https://business-rec-web-be.herokuapp.com/api/users/graph/:id/
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json |  |
+| Authorization | {{jwt_token}} |  |
+
+
+
+***Query params:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| eager | companies |  |
+
+
+
+### 5. delete a user
+
+
+
+***Endpoint:***
+
+```bash
+Method: DELETE
+Type: 
+URL: https://business-rec-web-be.herokuapp.com/api/users/:id/
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Authorization | {{jwt_token}} |  |
+
+
+
+### 6. patch a user
+
+
+
+***Endpoint:***
+
+```bash
+Method: PATCH
+Type: RAW
+URL: https://business-rec-web-be.herokuapp.com/api/users/:id/
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json |  |
+| Authorization | {{jwt_token}} |  |
+
+
+
+***Body:***
+
+```js        
+{
+  "password": "meatlovers"
+}
+```
+
+
+
+### 7. delete a user's company
+
+
+
+***Endpoint:***
+
+```bash
+Method: DELETE
+Type: RAW
+URL: https://business-rec-web-be.herokuapp.com/api/users/:id/companies
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json |  |
+| Authorization | {{jwt_token}} |  |
+
+
+
+***Body:***
+
+```js        
   {
     "id": "9"
   }
-  ```
----
+```
 
+
+
+### 8. add existing company to user
+
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: https://business-rec-web-be.herokuapp.com/api/users/10/companies
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json |  |
+| Authorization | {{jwt_token}} |  |
+
+
+
+***Body:***
+
+```js        
+  {
+    "id": "2"
+  }
+```
+
+
+
+## Default
+
+
+
+### 1. get root
+
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: https://business-rec-web-be.herokuapp.com
+```
+
+
+
+---
+[Back to top](#businessrecs)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2019-09-24 20:34:07 by [docgen](https://github.com/thedevsaddam/docgen)
