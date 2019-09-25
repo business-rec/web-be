@@ -432,4 +432,5 @@ URL: https://business-rec-web-be.herokuapp.com
 
 ---
 [Back to top](#businessrecs)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2019-09-24 20:34:07 by [docgen](https://github.com/thedevsaddam/docgen)
+
+api docs credit: https://github.com/thedevsaddam) 
