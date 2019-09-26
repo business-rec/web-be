@@ -5,6 +5,11 @@ const User = require("../database/models/User");
 const CompanyType = require("../database/models/CompanyType");
 const { transaction } = require("objection");
 
+const ClientID = "870F4TOjmQaoIyplwwb6_Q";
+
+const APIKey =
+  "dUvLUaWKbzENQFaLOI8k513GsdidPFH0lriqnn51fjT7oWMN9NausAJLhjSE69F5bt7NJO8hpiOGMnlqrLXq9108tEXxkJ1N-j3MGsLKqsGulYwKsp3CLClYc0GMXXYx";
+
 module.exports = router => {
   router.get("/companytypes", async (req, res) => {
     try {
@@ -16,21 +21,6 @@ module.exports = router => {
     }
   });
 
-  router.get("/", (req, res) => {
-    const requestOptions = {
-      headers: { accept: "application/json" }
-    };
-    axios
-      .get("https://icanhazdadcompany.com/search", requestOptions)
-      .then(response => {
-        res.status(200).json(response.data.results);
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ message: "Error Fetching Companies", error: err });
-      });
-  });
   router.get("/all", async (req, res) => {
     try {
       const companies = await Company.query();
