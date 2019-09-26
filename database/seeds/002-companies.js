@@ -2,19 +2,26 @@ const bcrypt = require("bcrypt");
 const faker = require("faker");
 
 const types = [
-  "Bars",
-  "Delis",
-  "Sandwiches",
-  "Pizza",
-  "Chinese",
-  "Breakfast & Brunch",
-  "Italian",
-  "Mexican",
-  "American (New)",
-  "American (Traditional)",
+  "Home Services",
+  "Shopping",
+  "Restaurants",
+  "Health & Medical",
+  "Beauty & Spas",
+  "Local Services",
+  "Food",
+  "Automotive",
+  "Doctors",
+  "Active Life",
+  "Professional Services",
+  "Event Planning & Services",
+  "Real Estate",
+  "Home & Garden",
+  "Auto Repair",
+  "Hair Salons",
   "Fast Food",
-  "Coffee & Tea",
-  "Cafes"
+  "Fashion",
+  "Nightlife",
+  "Contractors"
 ];
 
 const fakeCompany = i => ({
@@ -42,4 +49,3 @@ exports.seed = async function(knex, Promise) {
 };
 
 //npx knex seed:run --env=testing
-
