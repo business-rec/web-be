@@ -11,6 +11,7 @@ const promiseRouter = require("express-promise-router");
 const AuthRouter = require("./auth/auth-router");
 const CompaniesRouter = require("./companies/companies-router.js");
 const UsersRouter = require("./users/users-router.js");
+const YelpRouter = require("./yelp/yelp-router.js");
 //middleware
 const authenticate = require("./auth/authenticate-middleware.js");
 const { Model } = require("objection");
@@ -37,11 +38,13 @@ app.use(morgan("dev"));
 app.set("json spaces", 2);
 app.use(helmet());
 app.use("/api/auth", router);
+app.use("/api/yelp", router);
 app.use("/api/companies", authenticate, companiesRouter);
 //app.use("/api/companies", companiesRouter);
 app.use("/api/users", authenticate, usersRouter);
 
 AuthRouter(router);
+YelpRouter(router);
 CompaniesRouter(companiesRouter);
 UsersRouter(usersRouter);
 
