@@ -5,12 +5,15 @@ const secrets = require("../config/secrets");
 const bcrypt = require("bcrypt");
 const User = require("../database/models/User");
 const Company = require("../database/models/Company");
+const CompanyType = require("../database/models/CompanyType");
 
-//app.use("/api/users", usersRouter)
 module.exports = router => {
 	router.get("/all", async (req, res) => {
 		try {
 			const users = await User.query();
+			if (!users) {
+				res.status(404).send({ dberror: "no users" });
+			}
 			res.send(users);
 		} catch (err) {
 			console.log(err instanceof objection.ValidationError);
@@ -21,7 +24,7 @@ module.exports = router => {
 	router.get("/:id", async (req, res) => {
 		const user = await User.query().findById(req.params.id);
 		if (!user) {
-			throw createStatusCodeError(404);
+			res.status(404).send({ userError: "user does not exist" });
 		}
 		res.send(user);
 	});
@@ -33,7 +36,7 @@ module.exports = router => {
 			.eager(req.query.eager)
 			.findById(req.params.id);
 		if (!user) {
-			throw createStatusCodeError(404);
+			res.status(404).send({ userError: "user does not exist" });
 		}
 		res.send(user);
 	});
@@ -47,77 +50,120 @@ module.exports = router => {
 			user = await User.query().patchAndFetchById(req.params.id, update);
 		}
 		user = await User.query().patchAndFetchById(req.params.id, update);
-
+		if (!user) {
+			res.status(404).send({ userError: "user does not exist" });
+		}
 		res.send(user);
 	});
 
 	router.delete("/:id", async (req, res) => {
 		await User.query().deleteById(req.params.id);
-
+		if (!user) {
+			res.status(404).send({ userError: "user does not exist" });
+		}
 		res.send({});
 	});
 
 	router.get("/:id/companies", async (req, res) => {
 		const user = await User.query().findById(req.params.id);
 		if (!user) {
-			throw createStatusCodeError(404);
+			res.status(404).send({ userError: "user does not exist" });
 		}
 		const companies = await user.$relatedQuery("companies").skipUndefined();
 		res.send(companies);
 	});
 
-	// Add existing Company as a savedcompany to a user.
 	router.post("/:id/companies", async (req, res) => {
 		const user = await User.query().findById(req.params.id);
 		if (!user) {
-			throw createStatusCodeError(404);
+			res.status(404).send({ userError: "user does not exist" });
 		}
-		await user.$relatedQuery("companies").relate(req.body.id);
-		res.send(req.body);
+		try {
+			const company = await user
+				.$relatedQuery("companies")
+				.relate(req.body.id);
+			const companyId = company.companyid;
+			const newcompany = await user
+				.$relatedQuery("companies")
+				.findById(companyId);
+
+			res.status(201).send(newcompany);
+		} catch (err) {
+			res.status(404).send({ error: "company does not exist" });
+		}
 	});
 
-	//add a new company to a user, in the req body
 	router.post("/:id/newcompany", async (req, res) => {
 		const newcompany = req.body;
-		const user = await User.query().findById(req.params.id);
-		if (!user) {
-			throw createStatusCodeError(404);
+		const companyid = newcompany.id;
+		if (companyid) {
+			res.status(404).send({ error: "dont send company id" });
 		}
-		const company = await user
-			.$relatedQuery("companies")
-			.insert(newcompany);
+		const companytype = newcompany.type;
+		if (!companytype) {
+			res.status(404).send({ error: "must send company type" });
+		}
+		try {
+			const typechecker = await CompanyType.query().findOne({
+				type: companytype
+			});
+			if (!typechecker) {
+				res.status(404).send({ error: "company type invalid" });
+			}
+			const user = await User.query().findById(req.params.id);
+			if (!user) {
+				res.status(404).send({ userError: "user does not exist" });
+			}
+			const company = await user
+				.$relatedQuery("companies")
+				.insert(newcompany);
 
-		res.send(company);
+			res.status(200).send(company);
+		} catch (err) {
+			res.status(404).send(err);
+		}
 	});
 
 	router.delete("/:id/companies", async (req, res) => {
 		const user = await User.query().findById(req.params.id);
 		if (!user) {
-			throw createStatusCodeError(404);
+			res.status(404).send({ userError: "user does not exist" });
 		}
-		const company = await user
-			.$relatedQuery("companies")
-			.unrelate()
-			.findById(req.body.id);
-		if (!company) {
-			res.send({ message: "company does not exist for user" });
+		try {
+			const company = await user
+				.$relatedQuery("companies")
+				.unrelate()
+				.findById(req.body.id);
+			if (!company) {
+				res.status(404).send({
+					message: "company does not exist for user"
+				});
+			}
+			res.status(200).send(req.body);
+		} catch (err) {
+			res.status(404).send(err);
 		}
-		res.send(req.body);
 	});
 
 	router.patch("/:id/companies", async (req, res) => {
+		const updatedcompany = req.body;
+		const companyid = updatedcompany.id;
+		if (!companyid) {
+			res.status(404).send({ error: "missing company id" });
+		}
 		const user = await User.query().findById(req.params.id);
 		if (!user) {
-			throw createStatusCodeError(404);
+			res.status(404).send({ userError: "user does not exist" });
 		}
 		const company = await user
 			.$relatedQuery("companies")
 			.patchAndFetchById(req.body.id, req.body);
-		//.findById(req.body.id);
 		if (!company) {
-			res.send({ message: "company does not exist for user" });
+			res.status(404).send({
+				message: "company does not exist for user"
+			});
 		}
-		res.send(req.body);
+		res.status(200).send(company);
 	});
 };
 

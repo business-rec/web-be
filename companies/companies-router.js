@@ -5,15 +5,10 @@ const User = require("../database/models/User");
 const CompanyType = require("../database/models/CompanyType");
 const { transaction } = require("objection");
 
-const ClientID = "870F4TOjmQaoIyplwwb6_Q";
-
-const APIKey =
-  "dUvLUaWKbzENQFaLOI8k513GsdidPFH0lriqnn51fjT7oWMN9NausAJLhjSE69F5bt7NJO8hpiOGMnlqrLXq9108tEXxkJ1N-j3MGsLKqsGulYwKsp3CLClYc0GMXXYx";
-
 module.exports = router => {
   router.get("/companytypes", async (req, res) => {
     try {
-      let companytypes = await CompanyType.query().orderBy("companytypes.id");
+      let companytypes = await CompanyType.query().orderBy("companytypes.type");
       res.send(companytypes);
     } catch (err) {
       console.log(err instanceof objection.ValidationError);
