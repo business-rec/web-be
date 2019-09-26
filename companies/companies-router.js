@@ -13,7 +13,20 @@ const APIKey =
 module.exports = router => {
   router.get("/companytypes", async (req, res) => {
     try {
-      const companytypes = await CompanyType.query();
+      let companytypes = await CompanyType.query().orderBy("companytypes.id");
+      res.send(companytypes);
+    } catch (err) {
+      console.log(err instanceof objection.ValidationError);
+      console.log(err.data);
+    }
+  });
+
+  router.get("/typesarray", async (req, res) => {
+    try {
+      let companytypes = await CompanyType.query()
+        .select("companytypes.type")
+        .orderBy("companytypes.type");
+      companytypes = companytypes.map(company => company.type);
       res.send(companytypes);
     } catch (err) {
       console.log(err instanceof objection.ValidationError);
