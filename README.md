@@ -414,7 +414,44 @@ URL: https://business-rec-web-be.herokuapp.com/api/users/10/companies
   }
 ```
 
+### 9. add new company to a user
 
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: https://business-rec-web-be.herokuapp.com/api/users/:id/newcompany
+
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json |  |
+| Authorization | {{jwt_token}} |  |
+
+
+
+***Body:***
+
+```js        
+{
+    "name": "my company",
+    "type": "Delis",
+    "streetName": "123 street",
+    "streetAddress": "1234 st",
+    "city": "NYC",
+    "state": "NY",
+    "zipCode": "05445"
+}
+```
+
+---
 
 ## Default
 
