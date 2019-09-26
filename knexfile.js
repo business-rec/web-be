@@ -1,27 +1,38 @@
-// Update with your config settings.
-
 module.exports = {
+  // development: {
+  //   client: "sqlite3",
+  //   connection: {
+  //     filename: "./database/dev.sqlite3"
+  //   },
+  //   pool: {
+  //     afterCreate: (conn, cb) => {
+  //       conn.run("PRAGMA foreign_keys = ON", cb);
+  //     }
+  //   },
+  //   debug: true,
+  //   useNullAsDefault: true,
+  //   migrations: {
+  //     directory: "./database/migrations",
+  //     tableName: "dbmigrations"
+  //   },
+  //   seeds: { directory: "./database/seeds" }
+  // },
   development: {
-    client: "sqlite3",
-    connection: {
-      filename: "./database/dev.sqlite3"
-    },
-    pool: {
-      afterCreate: (conn, cb) => {
-        conn.run("PRAGMA foreign_keys = ON", cb);
-      }
-    },
-    debug: true,
-    useNullAsDefault: true,
+    client: "pg",
+    connection: "postgres://bryant:@localhost:5436/bryant",
     migrations: {
-      directory: "./database/migrations",
+      directory: __dirname + "/database/migrations",
       tableName: "dbmigrations"
     },
-    seeds: { directory: "./database/seeds" }
+    debug: true,
+    seeds: {
+      directory: __dirname + "/database/seeds"
+    }
   },
-  staging: {
+
+  production: {
     client: "pg",
-    connection: "postgres://localhost/test_db",
+    connection: process.env.DATABASE_URL,
     migrations: {
       directory: __dirname + "/database/migrations"
     },
@@ -29,17 +40,6 @@ module.exports = {
       directory: __dirname + "/database/seeds"
     }
   },
-
-  // production: {
-  //   client: "pg",
-  //   connection: process.env.DATABASE_URL,
-  //   migrations: {
-  //     directory: __dirname + "/database/migrations"
-  //   },
-  //   seeds: {
-  //     directory: __dirname + "/database/seeds"
-  //   }
-  // },
   testing: {
     client: "sqlite3",
     connection: { filename: "./database/test.sqlite3.db3" },
