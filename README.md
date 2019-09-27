@@ -905,6 +905,82 @@ Status: add new company to user | Code: 200
 }
 ```
 
+### 10. get company good and bad terms
+
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: https://business-rec-web-be.herokuapp.com/api/companies/:id/terms
+```
+
+
+***Headers:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| Content-Type | application/json |  |
+| Authorization | {{jwt_token}} |  |
+
+
+
+***Body:***
+
+```js        
+{
+    "name": "my company",
+    "type": "Delis",
+    "streetName": "123 street",
+    "streetAddress": "1234 st",
+    "city": "NYC",
+    "state": "NY",
+    "zipCode": "05445"
+}
+```
+
+
+
+***Responses:***
+
+
+Status: add new company to user | Code: 200
+
+
+
+```js
+{
+  "id": 17,
+  "typeid": 17,
+  "type": "Contractors",
+  "alias": "Contractors",
+  "terms": [
+    {
+      "id": 20,
+      "companytypetypeid": 17,
+      "term": "salesman",
+      "ratingscore": 0.8881,
+      "termtype": "worst"
+    },
+    {
+      "id": 19,
+      "companytypetypeid": 17,
+      "term": "solar",
+      "ratingscore": 0.8944,
+      "termtype": "worst"
+    },
+    {
+      "id": 18,
+      "companytypetypeid": 17,
+      "term": "phone",
+      "ratingscore": 0.897,
+      "termtype": "worst"
+    },
+...
+```
+
 
 
 ## yelp
