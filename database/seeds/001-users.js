@@ -23,7 +23,7 @@ exports.seed = async function(knex, Promise) {
   ];
 
   await knex("users").del();
-  await knex("users").insert(fakeUsers);
+  // await knex("users").insert(fakeUsers);
   await knex("users").insert(admins);
 };
 

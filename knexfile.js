@@ -19,7 +19,7 @@ module.exports = {
   // },
   development: {
     client: "pg",
-    connection: "postgres://bryant:@localhost:5436/bryant",
+    connection: "postgres://bryant:@localhost:5436/template1",
     migrations: {
       directory: __dirname + "/database/migrations",
       tableName: "dbmigrations"
