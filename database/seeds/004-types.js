@@ -1,11 +1,9 @@
 const setTypes = [
   "Home Services",
   "Shopping",
-  "Restaurants",
   "Health & Medical",
   "Beauty & Spas",
   "Local Services",
-  "Food",
   "Automotive",
   "Doctors",
   "Active Life",
@@ -17,15 +15,16 @@ const setTypes = [
   "Hair Salons",
   "Fast Food",
   "Fashion",
-  "Nightlife",
   "Contractors"
 ];
 
 exports.seed = async function(knex, Promise) {
   const types = [];
   for (let i = 0; i < setTypes.length; i++) {
-    const thistype = setTypes[i];
-    const type = { type: thistype };
+    const id = i + 1;
+    let thistype = setTypes[i];
+    let thisalias = thistype.replace("& ", "");
+    let type = { type: thistype, alias: thisalias, typeid: id };
     types.push(type);
   }
 

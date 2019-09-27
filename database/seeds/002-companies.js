@@ -35,17 +35,17 @@ const fakeCompany = i => ({
 });
 
 exports.seed = async function(knex, Promise) {
-  const fakeCompanys = [];
-  const companys = 11;
-  for (let i = 1; i < companys; i++) {
-    let company = await fakeCompany(i);
-    const thistype = types[i];
-    company = { type: thistype, ...company };
-    fakeCompanys.push(company);
-  }
-
-  await knex("companies").del();
-  await knex("companies").insert(fakeCompanys);
+  //   const fakeCompanys = [];
+  //   const companys = 11;
+  //   for (let i = 1; i < companys; i++) {
+  //     let company = await fakeCompany(i);
+  //     const thistype = types[i];
+  //     company = { type: thistype, ...company };
+  //     fakeCompanys.push(company);
+  //   }
+  //
+  //   await knex("companies").del();
+  //   await knex("companies").insert(fakeCompanys);
 };
 
 //npx knex seed:run --env=testing

@@ -94,7 +94,7 @@ module.exports = router => {
 	});
 
 	router.post("/:id/newcompany", async (req, res) => {
-		const newcompany = req.body;
+		let newcompany = req.body;
 		const companyid = newcompany.id;
 		if (companyid) {
 			res.status(404).send({ error: "dont send company id" });
@@ -114,13 +114,15 @@ module.exports = router => {
 			if (!user) {
 				res.status(404).send({ userError: "user does not exist" });
 			}
+			const companyType = typechecker.typeid;
+			newcompany = { typeid: companyType, ...newcompany };
 			const company = await user
 				.$relatedQuery("companies")
 				.insert(newcompany);
-
 			res.status(200).send(company);
 		} catch (err) {
-			res.status(404).send(err);
+			//res.status(404).send(err.data);
+			res.status(404).send(err instanceof objection.ValidationError);
 		}
 	});
 
