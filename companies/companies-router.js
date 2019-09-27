@@ -42,7 +42,7 @@ module.exports = router => {
       .skipUndefined()
       .allowEager("[terms]")
       .eager("[terms]")
-      .findById(companyType);
+      .where({ typeid: companyType });
     if (!companies) {
       res.status(404).send({ error: "doesn't exist" });
     }
